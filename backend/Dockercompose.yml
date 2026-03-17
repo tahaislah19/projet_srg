@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: autohall_db
+    restart: always
+    environment:
+      # On définit explicitement le mot de passe pour correspondre au backend
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin 
+      POSTGRES_DB: autohall_monitor
+    ports:
+      # Port 5433 pour DBeaver sur Windows, 5432 interne pour PostgreSQL
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: autohall_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      # L'URL utilise 'db' car c'est le nom du service interne à Docker
+      DATABASE_URL: postgresql://postgres:admin@db:5432/autohall_monitor
+
+volumes:
+  postgres_data:

@@ -1,0 +1,170 @@
+{
+  "settings": {
+    "checkInterval": 30000,
+    "slowThreshold": 300,
+    "timeout": 5000
+  },
+  "apps": [
+
+    {
+      "name": "Portail RH",
+      "url": "http://localhost:3001/rh",
+      "icon": "👥",
+      "category": "Ressources Humaines",
+      "description": "Gestion des employés et dossiers RH",
+      "environment": "Production",
+      "priority": "critical",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Gestion des Congés",
+      "url": "http://localhost:3001/conges",
+      "icon": "🗓️",
+      "category": "Ressources Humaines",
+      "description": "Demandes et validation des congés",
+      "environment": "Production",
+      "priority": "high",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "slow",
+      "cause": "Index manquant sur la table conges_employes — requêtes très lentes",
+      "solution": "Ajouter un index SQL sur date_debut + redémarrer PostgreSQL"
+    },
+
+    {
+      "name": "Stock Véhicules Neufs",
+      "url": "http://localhost:3002/stock/neufs",
+      "icon": "🚗",
+      "category": "Stock",
+      "description": "Inventaire des véhicules neufs",
+      "environment": "Production",
+      "priority": "critical",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Stock Pièces de Rechange",
+      "url": "http://localhost:3002/stock/pieces",
+      "icon": "🔧",
+      "category": "Stock",
+      "description": "Gestion des pièces détachées",
+      "environment": "Production",
+      "priority": "high",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "offline",
+      "cause": "Serveur DB Stock inaccessible — connexion refusée sur port 5432",
+      "solution": "Vérifier PostgreSQL : net start postgresql-x64-18 + tester via pgAdmin"
+    },
+
+    {
+      "name": "CRM Clients",
+      "url": "http://localhost:3003/crm",
+      "icon": "🤝",
+      "category": "Ventes",
+      "description": "Gestion de la relation client",
+      "environment": "Production",
+      "priority": "critical",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Gestion des Commandes",
+      "url": "http://localhost:3003/commandes",
+      "icon": "📦",
+      "category": "Ventes",
+      "description": "Suivi et traitement des commandes",
+      "environment": "Production",
+      "priority": "critical",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "slow",
+      "cause": "Pic de charge fin de mois — 340 commandes traitées simultanément",
+      "solution": "Augmenter le pool DB de 20 à 50 connexions + activer la file d'attente"
+    },
+
+    {
+      "name": "Gestion SAV",
+      "url": "http://localhost:3004/sav",
+      "icon": "🛠️",
+      "category": "Après-Vente",
+      "description": "Service après-vente et interventions",
+      "environment": "Production",
+      "priority": "high",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Rendez-Vous Atelier",
+      "url": "http://localhost:3004/atelier",
+      "icon": "📅",
+      "category": "Après-Vente",
+      "description": "Prise de rendez-vous atelier",
+      "environment": "Production",
+      "priority": "medium",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "offline",
+      "cause": "Module email surchargé — crash après envoi de 2000 rappels RDV",
+      "solution": "Redémarrer le service email + limiter l'envoi à 100 mails/min via cron"
+    },
+
+    {
+      "name": "Stock Véhicules Occasion",
+      "url": "http://localhost:3002/stock/occasion",
+      "icon": "🚙",
+      "category": "Stock",
+      "description": "Inventaire des véhicules d'occasion",
+      "environment": "Production",
+      "priority": "high",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Devis & Offres",
+      "url": "http://localhost:3003/devis",
+      "icon": "📋",
+      "category": "Ventes",
+      "description": "Création et suivi des devis commerciaux",
+      "environment": "Production",
+      "priority": "high",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+
+    {
+      "name": "Suivi Réparations",
+      "url": "http://localhost:3004/reparations",
+      "icon": "🔩",
+      "category": "Après-Vente",
+      "description": "État d'avancement des réparations",
+      "environment": "Production",
+      "priority": "medium",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "online"
+    },
+    {
+      "name": "Gestion de la Paie",
+      "url": "http://localhost:3001/rh/paie",
+      "icon": "💰",
+      "category": "Ressources Humaines",
+      "description": "Calcul et édition des bulletins de paie",
+      "environment": "Production",
+      "priority": "critical",
+      "slowThreshold": 300,
+      "timeout": 5000,
+      "simulatedStatus": "slow",
+      "cause": "Calcul des bulletins trop lourd en fin de mois — timeout sur 500+ employés",
+      "solution": "Lancer le calcul en batch de 50 employés + activer le traitement asynchrone"
+    }
+
+  ]
+}
